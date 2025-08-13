@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: WallpaperEngine
+
+wallpaper:
+  change:
+    cron: "0 */15 * * * *"
