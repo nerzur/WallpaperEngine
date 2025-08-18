@@ -1,0 +1,124 @@
+package com.nerzur.wallpaperengine.controller;
+
+import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
+import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
+import com.nerzur.wallpaperengine.util.JavaFXUtil;
+import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashImage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class InitController {
+
+    @FXML
+    VBox main;
+
+    @FXML
+    private Button downloadButton;
+
+    @FXML
+    private ImageView imageDownloaded;
+
+    @FXML
+    private VBox imageDetails;
+
+    @FXML
+    private Label id;
+
+    @FXML
+    private Label createdAt;
+
+    @FXML
+    private Label downloads;
+
+    @FXML
+    private Label likes;
+
+    @FXML
+    private Label description;
+
+    @FXML
+    private HBox categories;
+
+    ChangeWallpaperService changeWallpaperService = new ChangeWallpaperServiceImpl();
+
+    public InitController() {
+        changeWallpaperService.getFilePath().addListener((observable, oldPath, newPath) -> {
+            if (newPath != null && !newPath.isEmpty()) {
+                try {
+                    updateImage(newPath);
+                } catch (FileNotFoundException e) {
+                    JavaFXUtil.showMessage("ERROR", "Archivo no encontrado: " + newPath, Alert.AlertType.ERROR);
+                }
+            }
+        });
+    }
+
+    @FXML
+    protected void onDownloadButtonClick() {
+        // Crear imagen de carga temporal
+        ImageView loadingImage = new ImageView(new Image(this.getClass().getResourceAsStream("/resources/images/loading.gif")));
+        loadingImage.setFitWidth(100);
+        loadingImage.setFitHeight(100);
+
+        // Añadir al VBox
+        main.getChildren().add(loadingImage);
+
+
+        // Ejecutar en un hilo separado para no bloquear la UI
+        new Thread(() -> {
+            changeWallpaperService.changeWallPaper();
+            String filePath = changeWallpaperService.getFilePath().get();
+            UnsplashImage unsplashImage = changeWallpaperService.getImage();
+
+            // Actualizar la UI en el hilo de JavaFX
+            javafx.application.Platform.runLater(() -> {
+                try {
+                    updateImage(filePath);
+                    updateImageData(unsplashImage);
+                } catch (FileNotFoundException e) {
+                    JavaFXUtil.showMessage("ERROR", "Archivo no encontrado: " + filePath, Alert.AlertType.ERROR);
+                    e.printStackTrace();
+                } finally {
+                    JavaFXUtil.fadeOutTransition(loadingImage, event -> main.getChildren().remove(loadingImage));
+                    if (!imageDetails.isManaged() && !imageDetails.isVisible())
+                        JavaFXUtil.fadeInTransition(imageDetails, event -> {
+                            imageDetails.setManaged(true);
+                            imageDetails.setVisible(true);
+                        });
+                }
+            });
+        }).start();
+    }
+
+    private void updateImage(String path) throws FileNotFoundException {
+        File file = new File(path);
+        Image image = new Image(new FileInputStream(file));
+        imageDownloaded.setImage(image);
+    }
+
+    private void updateImageData(UnsplashImage unsplashImage){
+        id.setText(unsplashImage.id);
+        createdAt.setText(unsplashImage.createdAt);
+        downloads.setText(Integer.toString(unsplashImage.downloads));
+        likes.setText(Integer.toString(unsplashImage.likes));
+        description.setText(unsplashImage.description);
+        if(unsplashImage.categories != null)
+            unsplashImage.categories.forEach((category) -> {
+                Label label = new Label(category.title);
+                label.setStyle(" -fx-background-color: #eff6ff; -fx-text-fill: #1d4ed8;");
+                categories.getChildren().add(label);
+            });
+//        else
+//            categories.getChildren().add( new Label("-"));
+    }
+}

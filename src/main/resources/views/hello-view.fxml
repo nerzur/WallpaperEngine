@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="688.0" spacing="15" style="-fx-alignment: center;" styleClass="bg-gray-100" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cu.havanaclub.wallpaperengine.controller.InitController">
+<VBox fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="688.0" spacing="15" style="-fx-alignment: center;" styleClass="bg-gray-100" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nerzur.wallpaperengine.controller.InitController">
     <ImageView fx:id="imageDownloaded" fitHeight="400" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" styleClass="img">
         <Image url="@../resources/images/error404.png" />
     </ImageView>

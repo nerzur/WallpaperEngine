@@ -10,7 +10,7 @@
     </parent>
     <groupId>cu.nerzur</groupId>
     <artifactId>WallpaperEngine</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
     <name>WallpaperEngine</name>
     <description>WallpaperEngine</description>
     <url/>
@@ -132,7 +132,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>cu.havanaclub.wallpaperengine.WallpaperEngineApplication</mainClass>
+                            <mainClass>com.nerzur.wallpaperengine.WallpaperEngineApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
