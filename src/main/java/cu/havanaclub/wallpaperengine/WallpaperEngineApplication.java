@@ -1,13 +1,23 @@
 package cu.havanaclub.wallpaperengine;
 
+import cu.havanaclub.wallpaperengine.view.Init;
+import javafx.application.Application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class WallpaperEngineApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WallpaperEngineApplication.class, args);
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(WallpaperEngineApplication.class)
+                .headless(false) // Desactivamos el modo headless
+                .run(args);
+
+        Init.setSpringContext(context);
+
+        Application.launch(Init.class, args);
     }
 
 }

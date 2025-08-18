@@ -8,14 +8,23 @@ import cu.havanaclub.wallpaperengine.util.unsplash.UnsplashClient;
 import cu.havanaclub.wallpaperengine.util.unsplash.UnsplashOrientation;
 import cu.havanaclub.wallpaperengine.util.unsplash.model.UnsplashImage;
 import cu.havanaclub.wallpaperengine.util.unsplash.model.UnsplashSearchQuery;
+import javafx.beans.property.SimpleStringProperty;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@Getter
 @RequiredArgsConstructor
 public class ChangeWallpaperServiceImpl implements ChangeWallpaperService {
+
+    static UnsplashImage unsplashImage = null;
+
+    static String filePath = "";
+
+    static SimpleStringProperty filePathObservable = new SimpleStringProperty();
 
     @Override
     public void changeWallPaper(){
@@ -24,20 +33,30 @@ public class ChangeWallpaperServiceImpl implements ChangeWallpaperService {
         UnsplashSearchQuery unsplashSearchQuery = UnsplashSearchQuery.builder()
                 .orientation(UnsplashOrientation.Squarish)
                 .build();
-        UnsplashImage image = client.getRandomPhoto(unsplashSearchQuery)[0];
+        unsplashImage= client.getRandomPhoto(unsplashSearchQuery)[0];
         WindowsNotifier.showNotification("Updating wallpaper","Downloading new wallpaper");
-        System.out.println(image.getImageUrl());
-        String url = image.getImageUrl();
+        System.out.println(unsplashImage.getImageUrl());
+        String url = unsplashImage.getImageUrl();
         String filename = UUID.randomUUID().toString()+".png";
 
         try{
-            String path = FileDownloader.downloadImageToPictures(url, filename);
-            WallpaperChanger.setWallpaper(path);
+            filePath = FileDownloader.downloadImageToPictures(url, filename);
+            WallpaperChanger.setWallpaper(filePath);
             WindowsNotifier.showNotification("Wallpaper changed successfully","Wallpaper Details: \n" +
-                    image.toCustomString());
+                    unsplashImage.toCustomString());
+            filePathObservable.set(filePath);
         } catch (Exception e){
             System.err.println("Error al cambiar el fondo: " + e.getMessage());
         }
+    }
 
+    @Override
+    public  SimpleStringProperty getFilePath() {
+        return filePathObservable;
+    }
+
+    @Override
+    public UnsplashImage getImage() {
+        return unsplashImage;
     }
 }

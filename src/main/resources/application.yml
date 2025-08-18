@@ -4,4 +4,4 @@ spring:
 
 wallpaper:
   change:
-    cron: "0 */15 * * * *"
+    cron: "0 */45 * * * *"

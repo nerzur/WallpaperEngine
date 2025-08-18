@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="688.0" spacing="15" style="-fx-alignment: center;" styleClass="bg-gray-100" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cu.havanaclub.wallpaperengine.controller.InitController">
+    <ImageView fx:id="imageDownloaded" fitHeight="400" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" styleClass="img">
+        <Image url="@../resources/images/error404.png" />
+    </ImageView>
+
+    <VBox fx:id="imageDetails" managed="false" visible="false" maxWidth="400">
+        <Label styleClass="card-title" text="Image details" />
+        <VBox styleClass="card-body">
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="84.0" halignment="RIGHT" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="287.0" minWidth="10.0" prefWidth="282.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <Label styleClass="table-cell-success" wrapText="true" alignment="CENTER_RIGHT" text="ID: " />
+                <Label fx:id="id" maxWidth="Infinity" alignment="TOP_LEFT" text="Label" GridPane.columnIndex="1" />
+
+                <Label styleClass="table-cell-success" wrapText="true" alignment="CENTER_RIGHT" text="Created at: " GridPane.rowIndex="1" />
+                <Label fx:id="createdAt" maxWidth="Infinity" wrapText="true" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label styleClass="table-cell-success" wrapText="true" alignment="CENTER_RIGHT" text="Downloads: " GridPane.rowIndex="2" />
+                <Label fx:id="downloads" maxWidth="Infinity" wrapText="true" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label styleClass="table-cell-success" wrapText="true" alignment="CENTER_RIGHT" text="Likes: " GridPane.rowIndex="3" />
+                <Label fx:id="likes" maxWidth="Infinity" wrapText="true" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                <Label styleClass="table-cell-success" wrapText="true" alignment="CENTER_RIGHT" text="Description: " GridPane.rowIndex="4" />
+                <Label fx:id="description" maxWidth="Infinity" wrapText="true" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                <Label styleClass="table-cell-success" wrapText="true" alignment="CENTER_RIGHT" text="Categories: " GridPane.rowIndex="5" />
+                <HBox fx:id="categories" maxWidth="Infinity" spacing="5" />
+            </GridPane>
+        </VBox>
+        <styleClass>
+            <String fx:value="card" />
+            <String fx:value="card-primary" />
+        </styleClass>
+    </VBox>
+
+    <Button fx:id="downloadButton" mnemonicParsing="false" onAction="#onDownloadButtonClick" styleClass="btn-primary" text="Update Wallpaper" textAlignment="CENTER">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </Button>
+</VBox>
