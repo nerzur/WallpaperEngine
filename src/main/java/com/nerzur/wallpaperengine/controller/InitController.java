@@ -5,6 +5,9 @@ import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
 import com.nerzur.wallpaperengine.util.JavaFXUtil;
 import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashImage;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +29,9 @@ public class InitController {
 
     @FXML
     private Button downloadButton;
+
+    @FXML
+    private Button galleryButton;
 
     @FXML
     private ImageView imageDownloaded;
@@ -120,5 +128,29 @@ public class InitController {
             });
 //        else
 //            categories.getChildren().add( new Label("-"));
+    }
+
+    @FXML
+    protected void onGalleryButtonClick(){
+        try {
+            // Cargar el FXML de la ventana secundaria
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/gallery.fxml"));
+            Parent root = loader.load();
+
+            // Crear nueva escena y stage
+            Stage secondaryStage = new Stage();
+            secondaryStage.setScene(new Scene(root));
+            secondaryStage.setTitle("Gallery");
+            secondaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/resources/images/logo.png")));
+
+            // Configurar como ventana modal (opcional)
+            secondaryStage.initModality(Modality.APPLICATION_MODAL);
+
+            // Mostrar la ventana
+            secondaryStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

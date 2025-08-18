@@ -500,3 +500,139 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 2, 0, 0, 1);
 }
 
+/* Estilos para la galería */
+.gallery-scroll {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-hbar-policy: always;
+}
+
+.gallery-flow-pane {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+/* Estilo para cada imagen de la galería */
+.gallery-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.gallery-image:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(59,130,246,0.3), 10, 0, 0, 3);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+/* Estilo para el contenedor de cada imagen */
+.image-container {
+    -fx-spacing: 5px;
+    -fx-alignment: center;
+}
+
+.image-caption {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-wrap-text: true;
+    -fx-max-width: 180px;
+}
+
+/* Estilos para la barra de aplicación */
+.app-bar {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 10px;
+}
+
+.app-bar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px 10px;
+}
+
+.app-bar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* style.css */
+.gallery-list {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.gallery-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.image-container {
+    -fx-spacing: 5px;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.gallery-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.image-caption {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+    -fx-wrap-text: true;
+    -fx-max-width: 180px;
+}
+
+/* Estilo para el FlowPane */
+.gallery-flow-pane {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Contenedor de cada imagen */
+.image-container {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-border-radius: 5;
+    -fx-border-color: #e0e0e0;
+}
+
+/* Estilo para las imágenes */
+.image-container .image-view {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+/* Estilo para las etiquetas */
+.image-container .label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 180px;
+}
+
+/* Barra de desplazamiento */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #f5f5f5;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-background-radius: 5;
+}
