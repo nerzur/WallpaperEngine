@@ -3,7 +3,10 @@ package com.nerzur.wallpaperengine.controller;
 import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
 import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
 import com.nerzur.wallpaperengine.util.JavaFXUtil;
+import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
 import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashImage;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -74,38 +77,45 @@ public class InitController {
     @FXML
     protected void onDownloadButtonClick() {
         // Crear imagen de carga temporal
-        ImageView loadingImage = new ImageView(new Image(this.getClass().getResourceAsStream("/resources/images/loading.gif")));
-        loadingImage.setFitWidth(100);
-        loadingImage.setFitHeight(100);
+//        ImageView loadingImage = new ImageView(new Image(this.getClass().getResourceAsStream("/resources/images/loading.gif")));
+//        loadingImage.setFitWidth(100);
+//        loadingImage.setFitHeight(100);
+//
+//        // Añadir al VBox
+//        main.getChildren().add(loadingImage);
 
-        // Añadir al VBox
-        main.getChildren().add(loadingImage);
+        Stage loadingStage = JavaFXUtil.createLoadingStage("Processing", "Downloading new Wallpaper...");
+        loadingStage.show();
 
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                changeWallpaperService.changeWallPaper();
+                String filePath = changeWallpaperService.getFilePath().get();
+                UnsplashImage unsplashImage = changeWallpaperService.getImage();
 
-        // Ejecutar en un hilo separado para no bloquear la UI
-        new Thread(() -> {
-            changeWallpaperService.changeWallPaper();
-            String filePath = changeWallpaperService.getFilePath().get();
-            UnsplashImage unsplashImage = changeWallpaperService.getImage();
-
-            // Actualizar la UI en el hilo de JavaFX
-            javafx.application.Platform.runLater(() -> {
-                try {
-                    updateImage(filePath);
-                    updateImageData(unsplashImage);
-                } catch (FileNotFoundException e) {
-                    JavaFXUtil.showMessage("ERROR", "Archivo no encontrado: " + filePath, Alert.AlertType.ERROR);
-                    e.printStackTrace();
-                } finally {
-                    JavaFXUtil.fadeOutTransition(loadingImage, event -> main.getChildren().remove(loadingImage));
-                    if (!imageDetails.isManaged() && !imageDetails.isVisible())
-                        JavaFXUtil.fadeInTransition(imageDetails, event -> {
-                            imageDetails.setManaged(true);
-                            imageDetails.setVisible(true);
-                        });
-                }
-            });
-        }).start();
+                Platform.runLater(() -> {
+                    try {
+                        updateImage(filePath);
+                        updateImageData(unsplashImage);
+                    } catch (FileNotFoundException e) {
+                        WindowsNotifier.showNotification("Wallpaper Engine", "Error changing wallpaper.");
+                        e.printStackTrace();
+                    }
+                    loadingStage.close();
+                });
+                return null;
+            }
+        };
+        task.setOnSucceeded(event -> {
+            if (!imageDetails.isManaged() && !imageDetails.isVisible())
+                JavaFXUtil.fadeInTransition(imageDetails, e -> {
+                    imageDetails.setManaged(true);
+                    imageDetails.setVisible(true);
+                });
+            loadingStage.close();
+        });
+        new Thread(task).start();
     }
 
     private void updateImage(String path) throws FileNotFoundException {

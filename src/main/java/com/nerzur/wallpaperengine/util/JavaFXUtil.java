@@ -3,6 +3,7 @@ package com.nerzur.wallpaperengine.util;
 import com.nerzur.wallpaperengine.controller.InitController;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,13 +54,15 @@ public class JavaFXUtil {
         loadingStage.initStyle(StageStyle.UTILITY);
         loadingStage.setTitle(title);
         loadingStage.setResizable(false);
+        loadingStage.setAlwaysOnTop(true);
+
+        // Deshabilitar el botón de cerrar
+        // Esto previene que se cierre
+        loadingStage.setOnCloseRequest(Event::consume);
 
         ImageView loadingImage = new ImageView(new Image(InitController.class.getResourceAsStream("/resources/images/loading.gif")));
         loadingImage.setFitWidth(100);
         loadingImage.setFitHeight(100);
-
-//        ProgressIndicator progressIndicator = new ProgressIndicator();
-//        progressIndicator.setProgress(-1);
 
         Label messageLabel = new Label(message);
         messageLabel.setStyle("-fx-font-size: 14px;");
@@ -68,7 +72,12 @@ public class JavaFXUtil {
         root.setPadding(new Insets(20));
         root.setStyle("-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px;");
 
-        loadingStage.setScene(new Scene(root, 300, 200));
+        Scene scene = new Scene(root, 300, 200);
+
+        // Deshabilitar todos los atajos de teclado
+        scene.addEventFilter(KeyEvent.ANY, KeyEvent::consume);
+
+        loadingStage.setScene(scene);
 
         return loadingStage;
     }

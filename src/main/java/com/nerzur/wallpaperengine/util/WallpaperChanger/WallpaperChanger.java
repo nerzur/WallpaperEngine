@@ -67,16 +67,4 @@ public class WallpaperChanger {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        // Cambia esta ruta por la ubicación de tu imagen
-        String imagePath = "C:\\Users\\TuUsuario\\Pictures\\fondo.jpg";
-
-        // Verificar si el archivo existe antes de intentar cambiarlo
-        if (new java.io.File(imagePath).exists()) {
-            setWallpaper(imagePath);
-        } else {
-            System.err.println("El archivo no existe: " + imagePath);
-        }
-    }
 }
