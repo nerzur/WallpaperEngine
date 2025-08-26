@@ -1,8 +1,8 @@
 package com.nerzur.wallpaperengine.controller;
 
 import com.nerzur.wallpaperengine.util.JavaFXUtil;
-import com.nerzur.wallpaperengine.util.WallpaperChanger.WallpaperChanger;
-import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
+import com.nerzur.wallpaperengine.util.wallpaperChanger.WallpaperChanger;
+import com.nerzur.wallpaperengine.util.windowsNotifier.WindowsNotifier;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;

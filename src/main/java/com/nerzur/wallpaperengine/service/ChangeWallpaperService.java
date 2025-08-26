@@ -1,4 +1,4 @@
-package com.nerzur.wallpaperengine.services;
+package com.nerzur.wallpaperengine.service;
 
 import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashImage;
 import javafx.beans.property.SimpleStringProperty;

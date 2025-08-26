@@ -1,22 +1,19 @@
-package com.nerzur.wallpaperengine.services;
+package com.nerzur.wallpaperengine.service;
 
 import com.sangupta.jerry.http.service.impl.DefaultHttpServiceImpl;
-import com.nerzur.wallpaperengine.util.FileDownloader.FileDownloader;
-import com.nerzur.wallpaperengine.util.WallpaperChanger.WallpaperChanger;
-import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
+import com.nerzur.wallpaperengine.util.fileDownloader.FileDownloader;
+import com.nerzur.wallpaperengine.util.wallpaperChanger.WallpaperChanger;
+import com.nerzur.wallpaperengine.util.windowsNotifier.WindowsNotifier;
 import com.nerzur.wallpaperengine.util.unsplash.UnsplashClient;
 import com.nerzur.wallpaperengine.util.unsplash.UnsplashOrientation;
 import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashImage;
 import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashSearchQuery;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.concurrent.Task;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Getter
 @RequiredArgsConstructor

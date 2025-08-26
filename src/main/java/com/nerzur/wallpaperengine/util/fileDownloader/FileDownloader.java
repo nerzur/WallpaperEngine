@@ -1,4 +1,4 @@
-package com.nerzur.wallpaperengine.util.FileDownloader;
+package com.nerzur.wallpaperengine.util.fileDownloader;
 
 import java.io.IOException;
 import java.net.URI;

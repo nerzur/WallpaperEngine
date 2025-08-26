@@ -1,9 +1,11 @@
-package com.nerzur.wallpaperengine.view;
+package com.nerzur.wallpaperengine;
 
 import com.nerzur.wallpaperengine.scheduledTask.ScheduledTask;
-import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
-import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
-import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
+import com.nerzur.wallpaperengine.service.ChangeWallpaperService;
+import com.nerzur.wallpaperengine.service.ChangeWallpaperServiceImpl;
+import com.nerzur.wallpaperengine.util.propertiesConfig.PropertiesConfig;
+import com.nerzur.wallpaperengine.util.propertiesConfig.PropertiesConfigParam;
+import com.nerzur.wallpaperengine.util.windowsNotifier.WindowsNotifier;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -23,6 +25,7 @@ public class Init extends Application {
     private boolean realExit = false;
     ScheduledTask scheduledTask = new ScheduledTask();
     ChangeWallpaperService changeWallpaperService = new ChangeWallpaperServiceImpl();
+    PropertiesConfig propertiesConfig = new PropertiesConfig();
 
     @Override
     public void init() throws Exception {
@@ -34,7 +37,7 @@ public class Init extends Application {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/init.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1024, 768);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -45,7 +48,13 @@ public class Init extends Application {
         setupSystemTray();
 
         //Prepare the scheduled task
-        scheduledTask.createChangeWallpaperTask(60);
+        int time = 60;
+        try{
+            time = Integer.parseInt(propertiesConfig.getValue(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE));
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        scheduledTask.createChangeWallpaperTask(time);
 
         // Configurar comportamiento de cierre para la X
         stage.setOnCloseRequest(event -> {

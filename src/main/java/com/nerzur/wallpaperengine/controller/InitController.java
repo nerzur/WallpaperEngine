@@ -1,9 +1,9 @@
 package com.nerzur.wallpaperengine.controller;
 
-import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
-import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
+import com.nerzur.wallpaperengine.service.ChangeWallpaperService;
+import com.nerzur.wallpaperengine.service.ChangeWallpaperServiceImpl;
 import com.nerzur.wallpaperengine.util.JavaFXUtil;
-import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
+import com.nerzur.wallpaperengine.util.windowsNotifier.WindowsNotifier;
 import com.nerzur.wallpaperengine.util.unsplash.model.UnsplashImage;
 import javafx.application.Platform;
 import javafx.concurrent.Task;

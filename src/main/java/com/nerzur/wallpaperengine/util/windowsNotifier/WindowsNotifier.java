@@ -1,4 +1,4 @@
-package com.nerzur.wallpaperengine.util.WindowsNotifier;
+package com.nerzur.wallpaperengine.util.windowsNotifier;
 
 import java.awt.*;
 import java.io.*;

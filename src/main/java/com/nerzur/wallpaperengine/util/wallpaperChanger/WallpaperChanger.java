@@ -1,4 +1,4 @@
-package com.nerzur.wallpaperengine.util.WallpaperChanger;
+package com.nerzur.wallpaperengine.util.wallpaperChanger;
 
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.Advapi32Util;

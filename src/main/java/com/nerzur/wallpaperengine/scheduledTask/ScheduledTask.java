@@ -1,10 +1,8 @@
 package com.nerzur.wallpaperengine.scheduledTask;
 
-import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
-import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
-import javafx.concurrent.ScheduledService;
+import com.nerzur.wallpaperengine.service.ChangeWallpaperService;
+import com.nerzur.wallpaperengine.service.ChangeWallpaperServiceImpl;
 import javafx.concurrent.Task;
-import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executors;
