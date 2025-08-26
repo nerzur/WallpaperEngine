@@ -10,13 +10,20 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class WallpaperEngineApplication {
 
     public static void main(String[] args) {
+        // Verificar si soporta SystemTray
+        if (!java.awt.SystemTray.isSupported()) {
+            System.err.println("SystemTray is not supported");
+            return;
+        }
+
         ConfigurableApplicationContext context = new SpringApplicationBuilder(WallpaperEngineApplication.class)
-                .headless(false) // Desactivamos el modo headless
+                .headless(false)
                 .run(args);
 
         Init.setSpringContext(context);
 
-        Application.launch(Init.class, args);
+        // Iniciar JavaFX en modo "oculto"
+        new Thread(() -> Application.launch(Init.class, args)).start();
     }
 
 }
