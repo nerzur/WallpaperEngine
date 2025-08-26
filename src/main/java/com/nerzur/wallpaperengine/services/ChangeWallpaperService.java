@@ -5,7 +5,10 @@ import javafx.beans.property.SimpleStringProperty;
 
 public interface ChangeWallpaperService {
 
-    void changeWallPaper();
+    void downloadAndChangeWallpaper();
+    void changeWallpaperFromLocal(String filePath);
+    String getRandomWallpaperFilePath();
+
 
     SimpleStringProperty getFilePath();
     UnsplashImage getImage();

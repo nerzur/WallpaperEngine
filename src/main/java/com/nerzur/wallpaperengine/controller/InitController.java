@@ -76,13 +76,6 @@ public class InitController {
 
     @FXML
     protected void onDownloadButtonClick() {
-        // Crear imagen de carga temporal
-//        ImageView loadingImage = new ImageView(new Image(this.getClass().getResourceAsStream("/resources/images/loading.gif")));
-//        loadingImage.setFitWidth(100);
-//        loadingImage.setFitHeight(100);
-//
-//        // Añadir al VBox
-//        main.getChildren().add(loadingImage);
 
         Stage loadingStage = JavaFXUtil.createLoadingStage("Processing", "Downloading new Wallpaper...");
         loadingStage.show();
@@ -90,7 +83,7 @@ public class InitController {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                changeWallpaperService.changeWallPaper();
+                changeWallpaperService.downloadAndChangeWallpaper();
                 String filePath = changeWallpaperService.getFilePath().get();
                 UnsplashImage unsplashImage = changeWallpaperService.getImage();
 
@@ -136,8 +129,6 @@ public class InitController {
                 label.setStyle(" -fx-background-color: #eff6ff; -fx-text-fill: #1d4ed8;");
                 categories.getChildren().add(label);
             });
-//        else
-//            categories.getChildren().add( new Label("-"));
     }
 
     @FXML

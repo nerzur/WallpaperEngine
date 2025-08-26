@@ -7,6 +7,8 @@ import java.nio.file.Path;
 
 public class WindowsNotifier {
 
+    public static TrayIcon trayIcon;
+
     public static void showNotification(String title, String message) {
         try {
 
@@ -94,4 +96,14 @@ public class WindowsNotifier {
             e.printStackTrace();
         }
     }
+
+//    public static void showTrayNotification(String title, String message) {
+//        if (trayIcon != null) {
+//            try {
+//                trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO);
+//            } catch (Exception e) {
+//                System.err.println("Error mostrando notificación: " + e.getMessage());
+//            }
+//        }
+//    }
 }

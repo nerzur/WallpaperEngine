@@ -10,17 +10,7 @@ public class WallpaperChanger {
 
     public interface User32 extends StdCallLibrary {
         User32 INSTANCE = Native.load("user32", User32.class);
-
-        // Cambia esto:
         boolean SystemParametersInfoA(
-                int uiAction,
-                int uiParam,
-                String pvParam,
-                int fWinIni
-        );
-
-        // O alternativamente para Unicode:
-        boolean SystemParametersInfoW(
                 int uiAction,
                 int uiParam,
                 String pvParam,

@@ -1,35 +1,31 @@
 package com.nerzur.wallpaperengine.view;
 
+import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
+import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
+import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-@Component
 public class Init extends Application {
 
-    private static ConfigurableApplicationContext springContext;
     private Stage primaryStage;
     private TrayIcon trayIcon;
     private boolean realExit = false;
+    ChangeWallpaperService changeWallpaperService = new ChangeWallpaperServiceImpl();
 
     @Override
     public void init() throws Exception {
-        // Configurar el SystemTray antes de mostrar la ventana
-        Platform.runLater(() -> {
-            if (SystemTray.isSupported()) {
-                setupSystemTray();
-            }
-        });
+        // Esto evita que la aplicación se cierre cuando no hay ventanas visibles
+        Platform.setImplicitExit(false);
     }
 
     @Override
@@ -43,26 +39,50 @@ public class Init extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/images/logo.png")));
         stage.setTitle("Wallpaper Engine");
 
-        // Configurar comportamiento de cierre
+        // Configurar SystemTray después de que la ventana esté lista
+        setupSystemTray();
+
+        // Configurar comportamiento de cierre para la X
         stage.setOnCloseRequest(event -> {
             if (!realExit) {
-                event.consume();
+                event.consume(); // Prevenir el cierre
                 hideToSystemTray();
             }
         });
 
-        // No usar iconifiedProperty listener - causa problemas
+        // Configurar comportamiento de minimización
+        stage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && !realExit) {
+                // Cuando se minimiza, ocultar a la bandeja en lugar de minimizar normalmente
+                Platform.runLater(() -> {
+                    stage.setIconified(false); // Cancelar la minimización normal
+                    hideToSystemTray(); // Ocultar a la bandeja
+                });
+            }
+        });
+
+        // MOSTRAR LA VENTANA PRINCIPAL
+        stage.show();
     }
 
     private void hideToSystemTray() {
         if (primaryStage != null) {
-            primaryStage.hide();
-            showTrayNotification("Wallpaper Engine", "Running in system tray");
+            primaryStage.hide(); // Ocultar la ventana
+            if (trayIcon != null) {
+                WindowsNotifier.showNotification("Wallpaper Engine", "Application is running in background mode.");
+            }
         }
     }
 
     private void setupSystemTray() {
         try {
+            if (!SystemTray.isSupported()) {
+                System.out.println("SystemTray not supported");
+                // Si no hay system tray, no permitir minimizar a bandeja
+                primaryStage.setOnCloseRequest(null);
+                return;
+            }
+
             SystemTray tray = SystemTray.getSystemTray();
 
             java.awt.Image awtImage = java.awt.Toolkit.getDefaultToolkit()
@@ -74,15 +94,47 @@ public class Init extends Application {
             MenuItem openItem = new MenuItem("Open");
             openItem.addActionListener(e -> Platform.runLater(this::showAndFocusStage));
 
+
             MenuItem exitItem = new MenuItem("Exit");
             exitItem.addActionListener(e -> exitApplication());
 
+            MenuItem downloadNewWallpaper = new MenuItem("Download new Wallpaper");
+            downloadNewWallpaper.addActionListener(e ->
+            {
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        changeWallpaperService.downloadAndChangeWallpaper();
+                        return null;
+                    }
+                };
+                new Thread(task).start();
+            });
+
+            MenuItem getRandomWallpaper = new MenuItem("Get random Wallpaper");
+            getRandomWallpaper.addActionListener(e ->
+            {
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        changeWallpaperService.
+                                changeWallpaperFromLocal(changeWallpaperService.getRandomWallpaperFilePath());
+                        return null;
+                    }
+                };
+                new Thread(task).start();
+            });
+
             popup.add(openItem);
+            popup.addSeparator();
+            popup.add(downloadNewWallpaper);
+            popup.add(getRandomWallpaper);
             popup.addSeparator();
             popup.add(exitItem);
 
             trayIcon = new TrayIcon(awtImage, "Wallpaper Engine", popup);
             trayIcon.setImageAutoSize(true);
+            trayIcon.setToolTip("Wallpaper Engine");
 
             trayIcon.addMouseListener(new MouseAdapter() {
                 @Override
@@ -93,9 +145,18 @@ public class Init extends Application {
                 }
             });
 
+            WindowsNotifier.trayIcon = trayIcon;
+
             tray.add(trayIcon);
+
+        } catch (AWTException e) {
+            System.err.println("No se pudo agregar el icono a la bandeja: " + e.getMessage());
+            // Deshabilitar la funcionalidad de bandeja si falla
+            primaryStage.setOnCloseRequest(null);
         } catch (Exception e) {
-            System.err.println("SystemTray error: " + e.getMessage());
+            System.err.println("Error configurando SystemTray: " + e.getMessage());
+            e.printStackTrace();
+            primaryStage.setOnCloseRequest(null);
         }
     }
 
@@ -103,6 +164,12 @@ public class Init extends Application {
         if (primaryStage != null) {
             primaryStage.show();
             primaryStage.toFront();
+            primaryStage.requestFocus();
+
+            // Asegurarse de que no esté minimizado
+            if (primaryStage.isIconified()) {
+                primaryStage.setIconified(false);
+            }
         }
     }
 
@@ -110,31 +177,39 @@ public class Init extends Application {
         realExit = true;
         Platform.runLater(() -> {
             try {
-                if (primaryStage != null) {
-                    primaryStage.close();
-                }
+                // Remover el icono de la bandeja primero
                 if (SystemTray.isSupported() && trayIcon != null) {
                     SystemTray.getSystemTray().remove(trayIcon);
                 }
+
+                // Luego cerrar la ventana
+                if (primaryStage != null) {
+                    primaryStage.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
+                // Forzar la salida
                 Platform.exit();
                 System.exit(0);
             }
         });
     }
 
-    private void showTrayNotification(String title, String message) {
-        if (trayIcon != null) {
-            trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO);
+    @Override
+    public void stop() throws Exception {
+        // Solo realizar limpieza, no forzar cierre aquí
+        if (realExit) {
+            exitApplication();
         }
     }
 
-    @Override
-    public void stop() throws Exception {
-        exitApplication();
-    }
-
-    public static void setSpringContext(ConfigurableApplicationContext context) {
-        Init.springContext = context;
+    public static void main(String[] args) {
+        try {
+            launch(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
