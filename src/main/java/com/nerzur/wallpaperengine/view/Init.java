@@ -1,5 +1,6 @@
 package com.nerzur.wallpaperengine.view;
 
+import com.nerzur.wallpaperengine.scheduledTask.ScheduledTask;
 import com.nerzur.wallpaperengine.services.ChangeWallpaperService;
 import com.nerzur.wallpaperengine.services.ChangeWallpaperServiceImpl;
 import com.nerzur.wallpaperengine.util.WindowsNotifier.WindowsNotifier;
@@ -20,6 +21,7 @@ public class Init extends Application {
     private Stage primaryStage;
     private TrayIcon trayIcon;
     private boolean realExit = false;
+    ScheduledTask scheduledTask = new ScheduledTask();
     ChangeWallpaperService changeWallpaperService = new ChangeWallpaperServiceImpl();
 
     @Override
@@ -41,6 +43,9 @@ public class Init extends Application {
 
         // Configurar SystemTray después de que la ventana esté lista
         setupSystemTray();
+
+        //Prepare the scheduled task
+        scheduledTask.createChangeWallpaperTask(60);
 
         // Configurar comportamiento de cierre para la X
         stage.setOnCloseRequest(event -> {
