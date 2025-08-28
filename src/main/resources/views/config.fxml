@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0"
+            prefWidth="688.0" styleClass="bg-gray-100" stylesheets="@../resources/css/style.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.nerzur.wallpaperengine.controller.ConfigController">
+
+    <!-- Barra superior (TOP) -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10; -fx-background-color: #2c3e50;"
+              styleClass="app-bar">
+            <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Configuration"/>
+
+            <!-- Espacio flexible para empujar los botones a la derecha -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Botones alineados a la derecha -->
+            <HBox alignment="CENTER_RIGHT" spacing="5">
+                <Button onAction="#onSaveButtonClick" styleClass="app-bar-button" text="Save"/>
+                <Button onAction="#onCloseButtonClick" styleClass="app-bar-button" text="Close"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox spacing="20" style="-fx-padding: 20;">
+
+                <!-- Sección de Configuración General -->
+                <VBox spacing="15" styleClass="card">
+                    <VBox styleClass="card-header">
+                        <Label  text="Automatic Wallpaper Change"/>
+                    </VBox>
+
+                    <VBox spacing="15" styleClass="card-body">
+                        <GridPane hgap="10" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="NEVER" minWidth="150"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+
+                            <!-- Switch para activar/desactivar cambio automático -->
+                            <Label text="Enable automatic change:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <ToggleButton fx:id="autoChangeToggle" text="Activate"
+                                              onAction="#onAutoChangeToggleClick"
+                                              styleClass="toggle-switch"/>
+<!--                                <Label fx:id="toggleStatusLabel" text="Disabled"-->
+<!--                                       style="-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-padding: 0 0 0 10;"/>-->
+                            </HBox>
+
+                            <!-- Tiempo de ejecución programada -->
+                            <Label text="Change interval:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox fx:id="taskTimeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="15 min"/>
+                                        <String fx:value="30 min"/>
+                                        <String fx:value="1 hour"/>
+                                        <String fx:value="1 day"/>
+                                    </FXCollections>
+                                </items>
+                                <styleClass>
+                                    <String fx:value="input"/>
+                                    <String fx:value="w-full"/>
+                                </styleClass>
+                            </ComboBox>
+
+                            <rowConstraints>
+                                <RowConstraints/>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+                    </VBox>
+                </VBox>
+
+                <!-- Sección de Configuración de Wallpaper -->
+                <VBox spacing="15" styleClass="card">
+                    <VBox styleClass="card-header">
+                        <Label  text="Wallpaper Settings"/>
+                    </VBox>
+
+                    <VBox spacing="15" styleClass="card-body">
+                        <GridPane hgap="10" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="NEVER" minWidth="150"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+
+                            <Label text="Wallpaper Quality:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Low"/>
+                                        <String fx:value="Medium"/>
+                                        <String fx:value="High"/>
+                                        <String fx:value="Ultra"/>
+                                    </FXCollections>
+                                </items>
+                                <styleClass>
+                                    <String fx:value="input"/>
+                                    <String fx:value="w-full"/>
+                                </styleClass>
+                            </ComboBox>
+
+                            <Label text="Transition Effect:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Fade"/>
+                                        <String fx:value="Slide"/>
+                                        <String fx:value="Zoom"/>
+                                        <String fx:value="None"/>
+                                    </FXCollections>
+                                </items>
+                                <styleClass>
+                                    <String fx:value="input"/>
+                                    <String fx:value="w-full"/>
+                                </styleClass>
+                            </ComboBox>
+                            <rowConstraints>
+                                <RowConstraints/>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+                    </VBox>
+                </VBox>
+
+                <!-- Sección de Configuración Avanzada -->
+                <VBox spacing="15" styleClass="card">
+                    <VBox styleClass="card-header">
+                        <Label  text="Advanced Settings"/>
+                    </VBox>
+
+                    <VBox spacing="15" styleClass="card-body">
+                        <GridPane hgap="10" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="NEVER" minWidth="150"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+
+                            <Label text="Cache Size:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="100 MB"/>
+                                        <String fx:value="500 MB"/>
+                                        <String fx:value="1 GB"/>
+                                        <String fx:value="2 GB"/>
+                                    </FXCollections>
+                                </items>
+                                <styleClass>
+                                    <String fx:value="input"/>
+                                    <String fx:value="w-full"/>
+                                </styleClass>
+                            </ComboBox>
+
+                            <Label text="Log Level:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Debug"/>
+                                        <String fx:value="Info"/>
+                                        <String fx:value="Warning"/>
+                                        <String fx:value="Error"/>
+                                    </FXCollections>
+                                </items>
+                                <styleClass>
+                                    <String fx:value="input"/>
+                                    <String fx:value="w-full"/>
+                                </styleClass>
+                            </ComboBox>
+                            <rowConstraints>
+                                <RowConstraints/>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+                    </VBox>
+
+                    <VBox styleClass="card-footer">
+                        <Button onAction="#onRestoreDefaultsClick"
+                                text="Restore Defaults">
+                            <styleClass>
+                                <String fx:value="btn"/>
+                                <String fx:value="btn-danger"/>
+                            </styleClass>
+                        </Button>
+                    </VBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

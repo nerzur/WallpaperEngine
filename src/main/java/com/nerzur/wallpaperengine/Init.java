@@ -48,13 +48,17 @@ public class Init extends Application {
         setupSystemTray();
 
         //Prepare the scheduled task
-        int time = 60;
-        try{
-            time = Integer.parseInt(propertiesConfig.getValue(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE));
-        } catch (NumberFormatException e){
-            e.printStackTrace();
+        boolean automaticWallpaperChange = false;
+        try {
+            automaticWallpaperChange = Boolean.parseBoolean(propertiesConfig.getValue(PropertiesConfigParam.AUTOMATIC_DOWNLOAD_WALLPAPERS));
+        } catch (Exception ignored) {}
+        if(automaticWallpaperChange){
+            int time = 60;
+            try{
+                time = Integer.parseInt(propertiesConfig.getValue(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE));
+            } catch (Exception ignored) {}
+            scheduledTask.createChangeWallpaperTask(time);
         }
-        scheduledTask.createChangeWallpaperTask(time);
 
         // Configurar comportamiento de cierre para la X
         stage.setOnCloseRequest(event -> {

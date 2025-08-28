@@ -34,9 +34,6 @@ public class InitController {
     private Button downloadButton;
 
     @FXML
-    private Button galleryButton;
-
-    @FXML
     private ImageView imageDownloaded;
 
     @FXML
@@ -142,6 +139,30 @@ public class InitController {
             Stage secondaryStage = new Stage();
             secondaryStage.setScene(new Scene(root));
             secondaryStage.setTitle("Gallery");
+            secondaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/resources/images/logo.png")));
+
+            // Configurar como ventana modal (opcional)
+            secondaryStage.initModality(Modality.APPLICATION_MODAL);
+
+            // Mostrar la ventana
+            secondaryStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onConfigButtonClick(){
+        try {
+            // Cargar el FXML de la ventana secundaria
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/config.fxml"));
+            Parent root = loader.load();
+
+            // Crear nueva escena y stage
+            Stage secondaryStage = new Stage();
+            secondaryStage.setScene(new Scene(root));
+            secondaryStage.setTitle("Configuration");
             secondaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/resources/images/logo.png")));
 
             // Configurar como ventana modal (opcional)

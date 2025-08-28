@@ -636,3 +636,141 @@
     -fx-background-color: rgba(0,0,0,0.2);
     -fx-background-radius: 5;
 }
+
+/* Estilos para inputs y combobox */
+.input {
+    -fx-background-radius: 4px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1px;
+    -fx-padding: 8px;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 14px;
+}
+
+.input:hover {
+    -fx-border-color: #d1d5db;
+    -fx-background-color: #f9fafb;
+}
+
+/* Estilo específico para ComboBox */
+.input.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+}
+
+.input.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 8px 0 0;
+}
+
+.input.combo-box .arrow {
+    -fx-background-color: #6b7280;
+}
+
+.input.combo-box .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 8px;
+}
+
+.input.combo-box .list-view {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 4px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.input.combo-box .list-cell:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Clase para ancho completo */
+.w-full {
+    -fx-pref-width: 100%;
+    -fx-max-width: infinity;
+}
+
+/* Estilos para el botón del ComboBox */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 4px 4px 0;
+}
+
+.combo-box .arrow-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Estilos para el popup del ComboBox */
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-background-radius: 4px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 4px;
+}
+
+.combo-box-popup .list-cell {
+    -fx-padding: 8px 12px;
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Estilos para el campo de texto del ComboBox */
+.combo-box .text-input {
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+}
+
+/* Estados de deshabilitado */
+.input:disabled {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #9ca3af;
+    -fx-border-color: #e5e7eb;
+    -fx-opacity: 1.0;
+}
+
+/* Placeholder text */
+.input .prompt-text {
+    -fx-fill: #9ca3af;
+}
+
+/* Estilos para el Toggle Switch */
+.toggle-switch {
+    -fx-background-radius: 15px;
+    -fx-padding: 5px 15px;
+    -fx-min-width: 80px;
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.toggle-switch:selected {
+    -fx-background-color: #10b981;
+}
+
+.toggle-switch:hover {
+    -fx-opacity: 0.9;
+}
+
+/* Estilo para campos deshabilitados */
+.input:disabled {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #9ca3af;
+    -fx-border-color: #e5e7eb;
+    -fx-opacity: 1.0;
+}
+
+.combo-box:disabled {
+    -fx-opacity: 0.7;
+}
+
+.combo-box:disabled .arrow-button {
+    -fx-opacity: 0.5;
+}

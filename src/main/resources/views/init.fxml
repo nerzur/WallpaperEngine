@@ -18,8 +18,8 @@
 
             <!-- Botones alineados a la derecha -->
             <HBox alignment="CENTER_RIGHT" spacing="5">
-                <Button fx:id="galleryButton" onAction="#onGalleryButtonClick" styleClass="app-bar-button" text="Gallery" />
-                <Button styleClass="app-bar-button" text="Options" />
+                <Button onAction="#onGalleryButtonClick" styleClass="app-bar-button" text="Gallery" />
+                <Button onAction="#onConfigButtonClick" styleClass="app-bar-button" text="Configuration" />
                 <Button styleClass="app-bar-button" text="Help" />
             </HBox>
         </HBox>

@@ -33,6 +33,7 @@ public class PropertiesConfig {
 
     private void setDefaults() {
         properties.setProperty(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE.toString(), "60");
+        properties.setProperty(PropertiesConfigParam.AUTOMATIC_DOWNLOAD_WALLPAPERS.toString(), "true");
         saveConfig();
     }
 
