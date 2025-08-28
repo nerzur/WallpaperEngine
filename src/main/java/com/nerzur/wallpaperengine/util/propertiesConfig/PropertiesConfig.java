@@ -7,10 +7,22 @@ public class PropertiesConfig {
     private static final String CONFIG_FILE = System.getProperty("user.home") +
             File.separator + ".wallEngine.properties";
     private Properties properties;
+    private static volatile  PropertiesConfig instance;
 
-    public PropertiesConfig() {
+    private PropertiesConfig() {
         properties = new Properties();
         loadConfig();
+    }
+
+    public static PropertiesConfig getInstance() {
+        if(instance == null){
+            synchronized (PropertiesConfig.class){
+                if (instance == null){
+                    instance = new PropertiesConfig();
+                }
+            }
+        }
+        return instance;
     }
 
     public void loadConfig() {
@@ -34,10 +46,12 @@ public class PropertiesConfig {
     private void setDefaults() {
         properties.setProperty(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE.toString(), "60");
         properties.setProperty(PropertiesConfigParam.AUTOMATIC_DOWNLOAD_WALLPAPERS.toString(), "true");
+        properties.setProperty(PropertiesConfigParam.UNSPLASH_DEV_KEY.toString(), "");
         saveConfig();
     }
 
     public String getValue(PropertiesConfigParam propertiesConfigParam){
+        loadConfig();
         return properties.getProperty(propertiesConfigParam.toString(), "");
     }
 

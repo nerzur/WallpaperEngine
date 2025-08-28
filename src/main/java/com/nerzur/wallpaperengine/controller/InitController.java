@@ -65,7 +65,7 @@ public class InitController {
                 try {
                     updateImage(newPath);
                 } catch (FileNotFoundException e) {
-                    JavaFXUtil.showMessage("ERROR", "Archivo no encontrado: " + newPath, Alert.AlertType.ERROR);
+                    JavaFXUtil.showMessage("ERROR", "File is missing: " + newPath, Alert.AlertType.ERROR);
                 }
             }
         });
@@ -80,7 +80,10 @@ public class InitController {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                changeWallpaperService.downloadAndChangeWallpaper();
+                if(!changeWallpaperService.downloadAndChangeWallpaper()) {
+                    Platform.runLater(loadingStage::close);
+                    throw new InterruptedException();
+                }
                 String filePath = changeWallpaperService.getFilePath().get();
                 UnsplashImage unsplashImage = changeWallpaperService.getImage();
 

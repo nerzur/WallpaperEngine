@@ -3,6 +3,7 @@ package com.nerzur.wallpaperengine;
 import com.nerzur.wallpaperengine.scheduledTask.ScheduledTask;
 import com.nerzur.wallpaperengine.service.ChangeWallpaperService;
 import com.nerzur.wallpaperengine.service.ChangeWallpaperServiceImpl;
+import com.nerzur.wallpaperengine.util.JavaFXUtil;
 import com.nerzur.wallpaperengine.util.propertiesConfig.PropertiesConfig;
 import com.nerzur.wallpaperengine.util.propertiesConfig.PropertiesConfigParam;
 import com.nerzur.wallpaperengine.util.windowsNotifier.WindowsNotifier;
@@ -10,8 +11,11 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -25,7 +29,7 @@ public class Init extends Application {
     private boolean realExit = false;
     ScheduledTask scheduledTask = new ScheduledTask();
     ChangeWallpaperService changeWallpaperService = new ChangeWallpaperServiceImpl();
-    PropertiesConfig propertiesConfig = new PropertiesConfig();
+    final PropertiesConfig propertiesConfig = PropertiesConfig.getInstance();
 
     @Override
     public void init() throws Exception {
@@ -81,6 +85,7 @@ public class Init extends Application {
 
         // MOSTRAR LA VENTANA PRINCIPAL
         stage.show();
+        JavaFXUtil.verifyUnsplashDevKey();
     }
 
     private void hideToSystemTray() {
@@ -188,6 +193,7 @@ public class Init extends Application {
             if (primaryStage.isIconified()) {
                 primaryStage.setIconified(false);
             }
+            JavaFXUtil.verifyUnsplashDevKey();
         }
     }
 

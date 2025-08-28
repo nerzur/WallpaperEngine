@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public interface ChangeWallpaperService {
 
-    void downloadAndChangeWallpaper();
+    boolean downloadAndChangeWallpaper();
     void changeWallpaperFromLocal(String filePath);
     String getRandomWallpaperFilePath();
 

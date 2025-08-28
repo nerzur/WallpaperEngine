@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
@@ -22,7 +23,10 @@ public class ConfigController {
     @FXML
     private ComboBox<String> taskTimeComboBox;
 
-    PropertiesConfig propertiesConfig = new PropertiesConfig();
+    @FXML
+    private TextField uDevKeyTextField;
+
+    final PropertiesConfig propertiesConfig = PropertiesConfig.getInstance();
 
     @FXML
     public void initialize() {
@@ -31,6 +35,9 @@ public class ConfigController {
     }
 
     private void loadCurrentSettings() {
+        String unsplashDevKey = propertiesConfig.getValue(PropertiesConfigParam.UNSPLASH_DEV_KEY);
+        uDevKeyTextField.setText(unsplashDevKey);
+
         int time = Integer.parseInt(propertiesConfig.getValue(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE));
         taskTimeComboBox.setValue(getDisplayValueFromMinutes(time));
 
@@ -91,6 +98,7 @@ public class ConfigController {
 
         propertiesConfig.setValue(PropertiesConfigParam.SCHEDULED_TASK_TIME_LAPSE, Integer.toString(minutes));
         propertiesConfig.setValue(PropertiesConfigParam.AUTOMATIC_DOWNLOAD_WALLPAPERS, Boolean.toString(autoChangeToggle.isSelected()));
+        propertiesConfig.setValue(PropertiesConfigParam.UNSPLASH_DEV_KEY, uDevKeyTextField.getText());
 
         ScheduledTask scheduledTask = new ScheduledTask();
         scheduledTask.stopScheduledTask();

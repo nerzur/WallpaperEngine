@@ -34,7 +34,7 @@
                 <!-- Sección de Configuración General -->
                 <VBox spacing="15" styleClass="card">
                     <VBox styleClass="card-header">
-                        <Label  text="Automatic Wallpaper Change"/>
+                        <Label text="Automatic Wallpaper Change"/>
                     </VBox>
 
                     <VBox spacing="15" styleClass="card-body">
@@ -44,19 +44,26 @@
                                 <ColumnConstraints hgrow="ALWAYS"/>
                             </columnConstraints>
 
+                            <Label text="Unsplash Dev Key:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="uDevKeyTextField" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <styleClass>
+                                    <String fx:value="input"/>
+                                    <String fx:value="w-full"/>
+                                </styleClass>
+                            </TextField>
+
                             <!-- Switch para activar/desactivar cambio automático -->
-                            <Label text="Enable automatic change:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                            <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Label text="Enable automatic change:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                 <ToggleButton fx:id="autoChangeToggle" text="Activate"
                                               onAction="#onAutoChangeToggleClick"
                                               styleClass="toggle-switch"/>
-<!--                                <Label fx:id="toggleStatusLabel" text="Disabled"-->
-<!--                                       style="-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-padding: 0 0 0 10;"/>-->
+                                <!--                                <Label fx:id="toggleStatusLabel" text="Disabled"-->
+                                <!--                                       style="-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-padding: 0 0 0 10;"/>-->
                             </HBox>
 
-                            <!-- Tiempo de ejecución programada -->
-                            <Label text="Change interval:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                            <ComboBox fx:id="taskTimeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <Label text="Change interval:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <ComboBox fx:id="taskTimeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="15 min"/>
@@ -82,7 +89,7 @@
                 <!-- Sección de Configuración de Wallpaper -->
                 <VBox spacing="15" styleClass="card">
                     <VBox styleClass="card-header">
-                        <Label  text="Wallpaper Settings"/>
+                        <Label text="Wallpaper Settings"/>
                     </VBox>
 
                     <VBox spacing="15" styleClass="card-body">
@@ -134,7 +141,7 @@
                 <!-- Sección de Configuración Avanzada -->
                 <VBox spacing="15" styleClass="card">
                     <VBox styleClass="card-header">
-                        <Label  text="Advanced Settings"/>
+                        <Label text="Advanced Settings"/>
                     </VBox>
 
                     <VBox spacing="15" styleClass="card-body">

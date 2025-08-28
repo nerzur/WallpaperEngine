@@ -20,6 +20,10 @@ public class WindowsNotifier {
         }
     }
 
+    public static void showNotification(String message){
+        showNotification("Wallpaper Engine", message);
+    }
+
     private static void showModernToast(String title, String message) throws IOException, InterruptedException {
         String xml = String.format(
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
