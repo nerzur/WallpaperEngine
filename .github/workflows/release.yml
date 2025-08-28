@@ -21,8 +21,11 @@ jobs:
 
       - name: Extract version from pom.xml
         id: get_version
+        shell: pwsh
         run: |
-          for /f "tokens=2 delims=<>" %%a in ('findstr /i "<version>" pom.xml ^| findstr /v "<parent>"') do echo version=%%a>> %GITHUB_OUTPUT%
+          [xml]$pom = Get-Content pom.xml
+          $version = $pom.project.version
+          echo "version=$version" >> $env:GITHUB_OUTPUT
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
