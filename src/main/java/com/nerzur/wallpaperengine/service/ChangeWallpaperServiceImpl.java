@@ -34,7 +34,6 @@ public class ChangeWallpaperServiceImpl implements ChangeWallpaperService {
 
     @Override
     public boolean downloadAndChangeWallpaper() {
-//        UnsplashClient client = new UnsplashClient("gh9nQK2WoOQ-omOO1Rz3dKM70R1-DKttWJnev4Yj1pI");
         String unsplashDevKey = propertiesConfig.getValue(PropertiesConfigParam.UNSPLASH_DEV_KEY);
         if(unsplashDevKey == null || unsplashDevKey.length() < 10) {
             Platform.runLater(()->{

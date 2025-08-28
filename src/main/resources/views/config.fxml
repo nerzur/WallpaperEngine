@@ -87,10 +87,15 @@
                 </VBox>
 
                 <!-- Sección de Configuración de Wallpaper -->
-                <VBox spacing="15" styleClass="card">
-                    <VBox styleClass="card-header">
-                        <Label text="Wallpaper Settings"/>
-                    </VBox>
+                <VBox spacing="15">
+                    <StackPane styleClass="badge-container">
+                        <VBox styleClass="card-header">
+                            <Label text="Wallpaper Settings"/>
+                        </VBox>
+                        <HBox alignment="TOP_RIGHT" styleClass="ribbon-container">
+                            <Label text="COMING SOON" styleClass="ribbon-badge"/>
+                        </HBox>
+                    </StackPane>
 
                     <VBox spacing="15" styleClass="card-body">
                         <GridPane hgap="10" vgap="15">
@@ -100,7 +105,7 @@
                             </columnConstraints>
 
                             <Label text="Wallpaper Quality:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="0" value="Ultra" disable="true">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="Low"/>
@@ -116,7 +121,7 @@
                             </ComboBox>
 
                             <Label text="Transition Effect:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1" value="None" disable="true">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="Fade"/>
@@ -136,13 +141,22 @@
                             </rowConstraints>
                         </GridPane>
                     </VBox>
+                    <styleClass>
+                        <String fx:value="card"/>
+                        <String fx:value="coming-soon-card"/>
+                    </styleClass>
                 </VBox>
 
                 <!-- Sección de Configuración Avanzada -->
                 <VBox spacing="15" styleClass="card">
-                    <VBox styleClass="card-header">
-                        <Label text="Advanced Settings"/>
-                    </VBox>
+                    <StackPane styleClass="badge-container">
+                        <VBox styleClass="card-header">
+                            <Label text="Advanced Settings"/>
+                        </VBox>
+                        <HBox alignment="TOP_RIGHT" styleClass="ribbon-container">
+                            <Label text="COMING SOON" styleClass="ribbon-badge"/>
+                        </HBox>
+                    </StackPane>
 
                     <VBox spacing="15" styleClass="card-body">
                         <GridPane hgap="10" vgap="15">
@@ -152,7 +166,7 @@
                             </columnConstraints>
 
                             <Label text="Cache Size:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="0" value="2 GB" disable="true">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="100 MB"/>
@@ -168,7 +182,7 @@
                             </ComboBox>
 
                             <Label text="Log Level:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1" value="Info" disable="true">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
                                         <String fx:value="Debug"/>
