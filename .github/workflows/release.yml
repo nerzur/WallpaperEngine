@@ -31,6 +31,7 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Package EXE with jpackage
+        shell: cmd
         run: |
           jpackage ^
             --type exe ^
