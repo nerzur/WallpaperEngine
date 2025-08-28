@@ -1,0 +1,59 @@
+name: Build and Release JavaFX EXE
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Extract version from pom.xml
+        id: get_version
+        run: |
+          for /f "tokens=2 delims=<>" %%a in ('findstr /i "<version>" pom.xml ^| findstr /v "<parent>"') do echo version=%%a>> %GITHUB_OUTPUT%
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Package EXE with jpackage
+        run: |
+          jpackage ^
+            --type exe ^
+            --input target ^
+            --main-jar WallpaperEngine-${{ steps.get_version.outputs.version }}.jar ^
+            --main-class com.nerzur.wallpaperengine.Init ^
+            --name WallpaperEngine ^
+            --app-version ${{ steps.get_version.outputs.version }} ^
+            --win-dir-chooser ^
+            --win-menu ^
+            --win-shortcut
+
+      - name: Create Git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v${{ steps.get_version.outputs.version }} || echo "Tag exists"
+          git push origin v${{ steps.get_version.outputs.version }} || echo "Tag already pushed"
+
+      - name: Create/Update Release and Upload EXE
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: "WallpaperEngine v${{ steps.get_version.outputs.version }}"
+          files: |
+            *.exe
+          overwrite: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
