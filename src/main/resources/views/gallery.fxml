@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="688.0" styleClass="bg-gray-100" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nerzur.wallpaperengine.controller.GalleryController">
+
+   <!-- Barra superior (TOP) -->
+   <top>
+      <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10; -fx-background-color: #2c3e50;" styleClass="app-bar">
+         <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Gallery" />
+
+         <!-- Espacio flexible para empujar los botones a la derecha -->
+         <Region HBox.hgrow="ALWAYS" />
+
+         <!-- Botones alineados a la derecha -->
+         <HBox alignment="CENTER_RIGHT" spacing="5">
+            <Button fx:id="closeButton" onAction="#onCloseButtonClick" styleClass="app-bar-button" text="Close" />
+         </HBox>
+      </HBox>
+   </top>
+
+   <center>
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+         <FlowPane fx:id="galleryFlowPane" orientation="HORIZONTAL"
+                   hgap="10" vgap="10" prefWrapLength="700"
+                   style="-fx-padding: 10; -fx-alignment: center;"/>
+      </ScrollPane>
+   </center>
+</BorderPane>
